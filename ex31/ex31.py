@@ -48,9 +48,20 @@ def issqrt_dicho(n):
             if (m-1)*(m-1) <= n:
                 return m - 1
             r = m - 1
+    l, h = 0, n
+    while l != h:
+        v = (l+h) // 2 + 1
+        if v**2 <= n:
+            l = v
+        else:
+            h = v - 1
+    return l                    
 # print([issqrt_dicho(n) for n in range(30)])
 for n in range(100):
     assert issqrt_dicho(n) == issqrt_builtin(n)
+
+for n in range(100):
+    assert len( {eval("is_sqrt"+suf)(n) for suf in funs} ) == 1, n    
 
 timeit(stmt='issqrt_hard(1000)', setup="from __main__ import issqrt_hard")
 timeit.Timer(issqrt_hard(1000)).timeit(number=1000)

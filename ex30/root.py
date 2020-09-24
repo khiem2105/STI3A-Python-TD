@@ -22,3 +22,10 @@ for a in range(-5, 5+1):
         for c in range(-5, 5+1):
             if greatest_root(a, b, c) is not None:
                 assert greatest_root(a, b, c) in real_roots(a, b, c)
+
+__is = range(-5, 6)
+
+assert all(max(real_roots(a, b, c)) == greatest_root(a, b, c)
+            if real_roots(a, b, c) else greatest_root(a, b, c) is None
+            for a in __is for b in __is for c in __is 
+            if a != 0)
