@@ -19,75 +19,75 @@ def days_between_approx(y, m, d, Y, M, D):
 
 # print(days_between_approx(2010, 9, 1, 2020, 5, 6))
 
-def nb_anne_bissetile(y, Y):
-  nb = 0
-  if y < Y:
-    for a in range(y+1, Y):
-      if is_bissetile(a):
-        nb += 1
-  elif y > Y:
-    for a in range(Y+1, y):
-      if is_bissetile(a):
-        nb += 1              
-  return nb 
+# def nb_anne_bissetile(y, Y):
+#   nb = 0
+#   if y < Y:
+#     for a in range(y+1, Y):
+#       if is_bissetile(a):
+#         nb += 1
+#   elif y > Y:
+#     for a in range(Y+1, y):
+#       if is_bissetile(a):
+#         nb += 1              
+#   return nb 
 
-def days_between_mois(y, m, Y, M):
-  nb_day = 0
-  if y < Y:
-    if m != 12:
-      for mois in range(m+1, 12+1):
-        nb_day += nb_jours(y, mois)
-        # print(nb_jours(y, mois))
-        # print(nb_day)
-    if M != 1:
-      for mois in range(1, M):
-        nb_day += nb_jours(Y, mois)
-        # print("%d:%d" %(mois, nb_jours(y, mois)))
-        # print(nb_day)
-  elif y > Y:
-    if M != 12:
-      for mois in range(M+1, 12+1):
-        nb_day += nb_jours(Y, mois)
-    if m != 1:
-      for mois in range(1, m):
-        nb_day += nb_jours(y, mois)
-  else:
-    if m < M:
-      for mois in range(m+1, M):
-        nb_day += nb_jours(y, mois)
-    elif m > M:
-      for mois in range(M+1, m):
-        nb_day += nb_jours(y, mois)
-    return 0  
-  return nb_day  
+# def days_between_mois(y, m, Y, M):
+#   nb_day = 0
+#   if y < Y:
+#     if m != 12:
+#       for mois in range(m+1, 12+1):
+#         nb_day += nb_jours(y, mois)
+#         # print(nb_jours(y, mois))
+#         # print(nb_day)
+#     if M != 1:
+#       for mois in range(1, M):
+#         nb_day += nb_jours(Y, mois)
+#         # print("%d:%d" %(mois, nb_jours(y, mois)))
+#         # print(nb_day)
+#   elif y > Y:
+#     if M != 12:
+#       for mois in range(M+1, 12+1):
+#         nb_day += nb_jours(Y, mois)
+#     if m != 1:
+#       for mois in range(1, m):
+#         nb_day += nb_jours(y, mois)
+#   else:
+#     if m < M:
+#       for mois in range(m+1, M):
+#         nb_day += nb_jours(y, mois)
+#     elif m > M:
+#       for mois in range(M+1, m):
+#         nb_day += nb_jours(y, mois)
+#     return 0  
+#   return nb_day  
 
-def days_between(y, m, d, Y, M, D):
-  assert is_valid_date(y, m, d) and is_valid_date(Y, M, D)
-  if y < Y:
-    days_between = nb_jours(y, m) - d + D
-    # print(days_between)
-  elif y > Y:
-    days_between = nb_jours(Y, M) - D + d
-    # print(days_between)
+# def days_between(y, m, d, Y, M, D):
+#   assert is_valid_date(y, m, d) and is_valid_date(Y, M, D)
+#   if y < Y:
+#     days_between = nb_jours(y, m) - d + D
+#     # print(days_between)
+#   elif y > Y:
+#     days_between = nb_jours(Y, M) - D + d
+#     # print(days_between)
 
-  else:
-    if m < M:
-      days_between = nb_jours(y, m) - d + D
-      # print(days_between)
-    elif m > M:
-      days_between = nb_jours(Y, M) - D + d
-      # print(days_between)
-    else:
-      days_between = D - d
-      # print(days_between)
+#   else:
+#     if m < M:
+#       days_between = nb_jours(y, m) - d + D
+#       # print(days_between)
+#     elif m > M:
+#       days_between = nb_jours(Y, M) - D + d
+#       # print(days_between)
+#     else:
+#       days_between = D - d
+#       # print(days_between)
 
-  days_between += days_between_mois(y, m, Y, M)
-  if y != Y:
-    days_between += nb_anne_bissetile(y, Y) + (abs(Y-y)-1)*365
-  if y > Y:
-    return -days_between
-  else:  
-    return days_between  
+#   days_between += days_between_mois(y, m, Y, M)
+#   if y != Y:
+#     days_between += nb_anne_bissetile(y, Y) + (abs(Y-y)-1)*365
+#   if y > Y:
+#     return -days_between
+#   else:  
+#     return days_between  
 
 # print(nb_anne_bissetile(1985, 2017))
 # print(days_between_mois(1985,10,2017,9))   
@@ -107,14 +107,7 @@ def days_between_corr(y, m, d, Y, M, D):
 
 def weekday_hard(y, m, d):
   assert is_valid_date(y, m, d)
-  if y >= 1900:
-    return ((days_between(1900, 1, 1, y, m, d) % 7) + 1) % 7
-  else:
-    return (7-(days_between(y, m, d, 1900, 1, 1) % 7)+1) % 7
-
-def weekday_corr(y, m, d):
-  assert is_valid_date(y, m, d)
-  return ((days_between(1900, 1, 1, y, m, d) % 7) + 1) % 7
+  return (((days_between_corr(1900, 1, 1, y, m, d) % 7) + 1) % 7)
 
 # print(weekday_hard(1700, 1, 4))
 
@@ -186,9 +179,9 @@ def weekday_delambre(y, m, d):
     12:2
   }
   if is_bissetile(y):
-    K = d + code_mois_bissetile[m] + (int)((21/4) * (y/100)) + (int)((5/4) * (y%100)) + 2
+    K = d + code_mois_bissetile[m] + int((21/4) * (y/100)) + int((5/4) * (y%100)) + 2
   else:
-    K = d + code_mois_normal[m] + (int)((21/4) * (y/100)) + (int)((5/4) * (y%100)) + 2
+    K = d + code_mois_normal[m] + int((21/4) * (y/100)) + int((5/4) * (y%100)) + 2
   return K % 7
 
 # cal(2018, 9, weekday="weekday_delambre")
@@ -199,8 +192,7 @@ def daysgen(y, m, d, Y, M, D,week=False):
       yield y, m, d
       if d == nb_jours(y, m):
         if m == 12:
-          m = 1
-          d = 1
+          m, d = 1, 1
           y += 1
         else:
           m += 1
@@ -213,8 +205,7 @@ def daysgen(y, m, d, Y, M, D,week=False):
       yield (y, m, d), weekday
       if d == nb_jours(y, m):
         if m == 12:
-          m = 1
-          d = 1
+          m, d = 1, 1
           y += 1    
         else:
           m += 1
@@ -229,9 +220,15 @@ def daysgen(y, m, d, Y, M, D,week=False):
 
 
 # print(list(daysgen(2019, 2, 28, 2019, 3, 2)))
-# print(sum(1 for _ in daysgen(1985, 10, 21, 2017, 9, 19)))
+assert sum(1 for _ in daysgen(1985, 10, 21, 2017, 9, 19)) == 11656
 
-# assert all( (date(*t).weekday()+1)%7 == weekday(*t) for t in daysgen(1800, 1, 1, 2100, 1, 1)) 
+
+# print(list((date(*t).weekday()+1)%7 for t in daysgen(1800, 1, 1, 1800, 12, 31)))
+# print(list(weekday_hard(*t) for t in daysgen(1800, 1, 1, 1800, 12, 31)))
+assert all( (date(*t).weekday()+1)%7 == weekday_hard(*t)
+           for t in daysgen(1800, 1, 1, 2100, 1, 1))
 
 print(weekday_hard(1899, 12, 31))
 print(list(daysgen(1899, 12, 31, 1900, 1, 4, True)))
+
+assert list(daysgen(1899, 12, 31, 1900, 1, 4, True)) == [((1899, 12, 31), 0), ((1900, 1, 1), 1), ((1900, 1, 2), 2), ((1900, 1, 3), 3)]
