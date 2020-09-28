@@ -107,7 +107,7 @@ def days_between_corr(y, m, d, Y, M, D):
 
 def weekday_hard(y, m, d):
   assert is_valid_date(y, m, d)
-  return (((days_between_corr(1900, 1, 1, y, m, d) % 7) + 1) % 7)
+  return (days_between_corr(1900, 1, 1, y, m, d) + 1) % 7
 
 # print(weekday_hard(1700, 1, 4))
 
@@ -150,38 +150,12 @@ def cal(y, m, weekday="weekday_hard"):
 #   print(cal(2018, m))            
 
 def weekday_delambre(y, m, d):
-  code_mois_normal = {
-    1:4,
-    2:0,
-    3:0,
-    4:3,
-    5:5,
-    6:1,
-    7:3,
-    8:6,
-    9:2,
-    10:4,
-    11:0,
-    12:2
-  }
-  code_mois_bissetile = {
-    1:3,
-    2:6,
-    3:0,
-    4:3,
-    5:5,
-    6:1,
-    7:3,
-    8:6,
-    9:2,
-    10:4,
-    11:0,
-    12:2
-  }
+  code_mois_normal = [4, 0, 0, 3, 5, 1, 3, 6, 2, 4, 0, 2]
+  code_mois_bissetile = [3, 6, 0, 3, 5, 1, 3, 6, 2, 4, 0, 2]
   if is_bissetile(y):
-    K = d + code_mois_bissetile[m] + int((21/4) * (y/100)) + int((5/4) * (y%100)) + 2
+    K = d + code_mois_bissetile[m-1] + int((21/4) * (y/100)) + int((5/4) * (y%100)) + 2
   else:
-    K = d + code_mois_normal[m] + int((21/4) * (y/100)) + int((5/4) * (y%100)) + 2
+    K = d + code_mois_normal[m-1] + int((21/4) * (y/100)) + int((5/4) * (y%100)) + 2
   return K % 7
 
 # cal(2018, 9, weekday="weekday_delambre")
