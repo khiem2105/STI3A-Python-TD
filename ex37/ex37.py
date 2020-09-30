@@ -47,17 +47,46 @@ msg1 = "THESTUDENTSARENICEANDHARDWORKING"
 key1 = "ORARETHEY"
 crypt1 = crypt(msg1, key1)
 # print(crypt1, crypt(crypt1, key1, True))
+crypt2 = crypt("THISISATEST", "K")
+print(crypt2)
 
-def find_max_score(cyp, l):
+def find_key(c, l, cyp):
   key = str()
   for _ in range(l):
-    key = key + "A"
-  key 
+    key = key + c  
+  alphabet = [chr(i) for i in range(ord("A"), ord("Z") + 1)]
+  is_changed = True
+  while is_changed:
+    is_changed = False
+    for j in range(l):
+      find_character = max(alphabet, key=lambda x:fitness.score(crypt(cyp, key[:j] + x + key[j + 1:], True)))
+      if find_character != key[j]:
+        is_changed = True
+        key = key[:j] + find_character + key[j+1:]
+  return key    
 
+# print(find_key("A", 4))
+       
 def autobreak(cyp):
-  print(fitness.score("LCINBROMPLNEMMKTKGSIHCIOOEQJFMIO"))
+  for i in range(10):
+    key = [find_key(chr(j), i+1, cyp) for j in range(ord("A"), ord("Z") + 1)]
+    # print(key)
+    best_key = max(key, key=lambda x: fitness.score(crypt(cyp, x, True)))
+    cyp_dechiffre = crypt(cyp, best_key, True)
+    score = fitness.score(cyp_dechiffre)
+    print(f"{best_key:>10} {cyp_dechiffre:10} {score}")
 
-autobreak("")
-print(crypt(crypt1, "W", True))
-print(crypt(crypt1, "XUMC", True))
-print(fitness.score(crypt(crypt1, "TION", True)))
+autobreak(crypt2)    
+
+# def test(text):
+#   for i in text:
+#     text = text.replace(i, chr(ord(i)+1))
+#     print(text)
+#   print(text)    
+
+# test("ABC")
+# print([fitness.score("AMAA") for i in range(ord("A"), ord("Z")+1)])
+# autobreak("")
+# print(crypt(crypt1, "W", True))
+# print(crypt(crypt1, "XUMC", True))
+# print(fitness.score(crypt(crypt1, "TION", True)))

@@ -81,12 +81,11 @@ def crange(a, b):
 assert "".join(crange("A", "Z")) == "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 def charrange(*args):
-    if args != ():
+    if args:
         i = 0
         while i < len(args):
             yield from crange(args[i], args[i+1])
             i += 2
-    return ""
 
 # gen = charrange("A", "Z", "a", "z", "0", "9")
 # print(next(gen))

@@ -5,13 +5,13 @@ Allows scoring of text using n-gram probabilities
 from math import log10
 
 class ngram_score(object):
-    def __init__(self,ngramfile='./english_quadgrams.txt',sep=' '):
+    def __init__(self,ngramfile='./ex37/english_quadgrams.txt',sep=' '):
         ''' load a file containing ngrams and counts, calculate log probabilities '''
         self.ngrams = {}
         for line in open(ngramfile):
-            key,count = line.split(sep) 
-            self.ngrams[key] = int(count)
-            self.L = len(key)
+          key,count = line.split(sep) 
+          self.ngrams[key] = int(count)
+        self.L = len(key)
         self.N = sum(self.ngrams.values())
         #calculate log probabilities
         for key in self.ngrams.keys():
