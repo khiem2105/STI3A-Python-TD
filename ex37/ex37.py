@@ -1,3 +1,6 @@
+import ngram_score as ns
+fitness = ns.ngram_score()
+
 def print_grille():
   for i in range(ord("A")-2, ord("Z")+1):
     if i == ord("A") - 2:
@@ -17,7 +20,7 @@ def print_grille():
         print(chr(j), end=" ")
       print("")         
 
-print_grille()
+# print_grille()
 
 def crypt(msg, key, dechiffre=False):
   msg_len = len(msg)
@@ -43,4 +46,18 @@ def crypt(msg, key, dechiffre=False):
 msg1 = "THESTUDENTSARENICEANDHARDWORKING"
 key1 = "ORARETHEY"
 crypt1 = crypt(msg1, key1)
-print(crypt1, crypt(crypt1, key1, True))
+# print(crypt1, crypt(crypt1, key1, True))
+
+def find_max_score(cyp, l):
+  key = str()
+  for _ in range(l):
+    key = key + "A"
+  key 
+
+def autobreak(cyp):
+  print(fitness.score("LCINBROMPLNEMMKTKGSIHCIOOEQJFMIO"))
+
+autobreak("")
+print(crypt(crypt1, "W", True))
+print(crypt(crypt1, "XUMC", True))
+print(fitness.score(crypt(crypt1, "TION", True)))
