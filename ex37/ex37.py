@@ -22,7 +22,7 @@ def print_grille():
         print(chr(j), end=" ")
       print("")         
 
-print_grille()
+# print_grille()
 
 def crypt(msg, key, dechiffre=False):
   msg_len = len(msg)
@@ -66,6 +66,8 @@ def gramiter(s, n=4):
     i += 1
 
 # print(tuple(gramiter("ATTACK", n=1)))
+assert tuple(gramiter("ATTACK")) == ("ATTA", "TTAC", "TACK")
+assert tuple(gramiter("ATTACK", n=1)) == ("A", "T", "T", "A", "C", "K")
 
 def process(text="WP.txt", out="quads.txt"):
   with open(text) as t, open(out, "w") as o:
@@ -82,7 +84,7 @@ def process(text="WP.txt", out="quads.txt"):
 
 # process()
 
-def load_grams(fname="quads.txt"):
+def load_grams(fname="./ex37/quads.txt"):
   c = Counter()
   with open(fname) as f:
     for line in f:
@@ -95,7 +97,7 @@ total = sum(count for count in C.values())
 p0 = 1 / (100 * total)
 
 def score(s, C=C):
-  score = 1
+  score = 0
   for quad_gram in gramiter(s):
     # score += C[quad_gram]
     if quad_gram not in C:
@@ -126,13 +128,13 @@ def autobreak(cyp):
     best_key = max(key, key=lambda x:score(crypt(cyp, x, True)))
     cyp_dechiffre = crypt(cyp, best_key, True)
     point = score(cyp_dechiffre)
-    print(f"{best_key:>9} {cyp_dechiffre:15} {point}")
+    print(f"{best_key:>10} {cyp_dechiffre:15} {point}")
 
 autobreak("MVUDHIVKSMREKSGMMEKOZXSVZVNMTATSLZTOITYGIROLZWMGFRIMIQCLXECSIXLASULCR")
 autobreak("GVVMFEMMCTKYQBPZBDPYHJYYZIYSOHZRMNIOXMIQPYGBPMLUKVWZRFHAIWECJC")
 # autobreak("LXATDEMAFLIDVVFZKZHPBWARJEWXMAHSMZATGWPCJIDIWFSSVTMNAUTVJCYFDVVL")
 # autobreak("LXATDEMAFLIDVVFZKZHPBWARJEZEHWQTIINWRMNUWEXMTTPMQZXHQDLIPKZSYMDHREVVXCZPX")
-# autobreak(crypt2)
+# autobreak(crypt1)
 print(score("THISISACOHERENTSENTENCE"))
 print(score("BLAHIBLAHBLOBYAAKNOWAHH"))
 print(score("LKFJLSDFJIOJZOJMIOFJNZA"))

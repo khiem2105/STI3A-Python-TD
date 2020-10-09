@@ -1,3 +1,5 @@
+from __future__ import generator_stop
+
 def upto(g, i):
     return (next(g) for _ in range(i))
 
@@ -6,7 +8,7 @@ assert list(upto((n*n for n in range(100)), 7)) == \
         [0, 1, 4, 9, 16, 25, 36]
 
 def nth(g, n):
-    return [next(g) for _ in range(n+1)][n]
+    return next(x for k, x in enumerate(g) if k == n)
 
 assert all(nth(g, i) == i*i for i in range(7) for g in [(n*n for n in range(7))])
 
@@ -86,9 +88,27 @@ def say(s):
 
 # print(list(upto(power(say, "22"), 7)))
 
-def conway(seed="1", maxrnk=100, maxlen=10):
-    gen = upto(power(say, "1"), 20)
-    for i in range(maxrnk+1):
-        print(f"{i:>3} {next(gen):5}")
+def conway(seed="1", maxrnk=100, maxlen=30):
+    for i, g in enumerate(upto(power(say, seed), maxrnk)):
+      print(f"{i:>3} {g[:maxlen]}")
 
-conway()
+# conway()
+
+def sayg(s):
+  return (str(c) for tup in groupn(s) for c in tup)
+
+# print(list(upto(power(say, "1"), 8)))
+
+def nthpowerg(f, n, s):
+  if n == 0:
+    yield s
+  else:
+    yield from f([c for c in nthpowerg(f, n-1, s)])
+
+assert "".join(upto(nthpowerg(sayg, 6, "1"),8)) == "13112221"
+
+def conwayg(seed="1", maxrnk=100, maxlen=30):
+  for i in range(maxrnk):
+    print(f"{i} {''.join(upto(nthpowerg(sayg, i, seed),maxlen))}")
+
+conwayg()
