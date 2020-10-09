@@ -1,5 +1,5 @@
 def palindrome(s):
-    return [s[i] for i in range(len(s))] == [s[len(s)-i-1] for i in range(len(s))]
+    return all(s[i] == s[-i-1] for i in range(len(s)))
 
 # print(palindrome("abcba"))
 assert palindrome("abba")
@@ -9,14 +9,14 @@ assert palindrome("a")
 assert not palindrome("ab")
 
 def inverse(s):
-    return [s[len(s)-i-1] for i in range(len(s))]
+    return [s[-i-1] for i in range(len(s))]
 
 # print(inverse("abc"))
 assert inverse("abc") == ["c", "b", "a"]
 assert inverse("") == []
 
 def palinv(s):
-    return [c for c in s] == inverse(s)
+    return list(s) == inverse(s)
 
 assert palinv("abba")
 assert palinv("abcba")
@@ -35,12 +35,13 @@ def rmspaces(s):
 # print(rmspaces("esope reste ici et se repose"))
 
 def palindrome_sentence(s):
-    return [s[i] for i in range(len(s)) if s[i] != " "] == [s[len(s)-i-1] for i in range(len(s)) if s[len(s)-i-1] != " "]
+    # return [s[i] for i in range(len(s)) if s[i] != " "] == [s[len(s)-i-1] for i in range(len(s)) if s[len(s)-i-1] != " "]
+    return palindrome(rmspaces(s))
 
 assert palindrome_sentence("esope reste ici et se repose")
 
 def fsum(f, i, j):
-    return sum(f(i) for i in range(i, j+1))
+    return sum(f(k) for k in range(i, j+1))
 
 assert fsum(lambda i: i, 0, 10) == 55
 assert fsum(lambda i: i*i, 0, 10) == 385
@@ -87,6 +88,12 @@ def charrange(*args):
             yield from crange(args[i], args[i+1])
             i += 2
 
+def charrange(*p):
+    while p:
+        assert len(p) >= 2
+        a, b, *p = p
+        yield from crange(a, b)            
+
 # gen = charrange("A", "Z", "a", "z", "0", "9")
 # print(next(gen))
 # print(next(gen))
@@ -94,5 +101,7 @@ def charrange(*args):
 
 assert "".join(charrange("A", "Z", "a", "z", "0", "9")) ==\
          "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-assert "".join(charrange()) == ""                    
+assert "".join(charrange()) == ""
+print(crange("A", "Z"))
+print(charrange("A", "Z", "a", "z", "0", "9"))                    
 
