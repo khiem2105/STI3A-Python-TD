@@ -84,7 +84,7 @@ def process(text="WP.txt", out="quads.txt"):
 
 # process()
 
-def load_grams(fname="./ex37/quads.txt"):
+def load_grams(fname="quads.txt"):
   c = Counter()
   with open(fname) as f:
     for line in f:
