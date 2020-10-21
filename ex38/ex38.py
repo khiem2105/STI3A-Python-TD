@@ -1,4 +1,4 @@
-from __future__ import generator_stop
+# from __future__ import generator_stop
 
 def upto(g, i):
     return (next(g) for _ in range(i))
